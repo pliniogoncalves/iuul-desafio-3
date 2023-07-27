@@ -3,9 +3,16 @@ import { Credito } from "../credito/credito";
 import { Debito } from "../debito/debito";
 
 export class ContaCorrente extends Conta {
+    private limite: number;
+
     constructor(numero: string, limite: number) {
-        super(numero, limite)
+        super(numero);
+        this.limite = limite;
     }
+
+    getLimite(): number {
+        return this.limite;
+      }
 
     transferir(contaDestino: Conta, valor: number): void {
         if(valor <= this.saldo) {

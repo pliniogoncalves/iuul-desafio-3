@@ -6,7 +6,11 @@ const credito_1 = require("../credito/credito");
 const debito_1 = require("../debito/debito");
 class ContaCorrente extends conta_1.Conta {
     constructor(numero, limite) {
-        super(numero, limite);
+        super(numero);
+        this.limite = limite;
+    }
+    getLimite() {
+        return this.limite;
     }
     transferir(contaDestino, valor) {
         if (valor <= this.saldo) {

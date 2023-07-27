@@ -4,12 +4,10 @@ import { Debito } from "../debito/debito";
 export abstract class Conta{
     private numero: string;
     protected saldo: number = 0;
-    private limite: number;
     private transacoes:(Debito | Credito)[];
 
-    constructor(numero: string, limite:number) {
+    constructor(numero: string) {
         this.numero = numero;
-        this.limite = limite;
         this.transacoes = [];
     }
 
@@ -18,34 +16,31 @@ export abstract class Conta{
     }
 
     getSaldo(): number {
-        return this.saldo;
+        const totalCreditos = this.transacoes
+          .filter((transacao) => transacao instanceof Credito)
+          .reduce((total, credito) => total + credito.getValor(), 0);
+    
+        const totalDebitos = this.transacoes
+          .filter((transacao) => transacao instanceof Debito)
+          .reduce((total, debito) => total + debito.getValor(), 0);
+    
+        return totalCreditos - totalDebitos;
     }
 
-    getLimite(): number {
-        return this.limite;
-    }
+    abstract getLimite(): number;
 
     depositar(valor: number): void {
-        const debito = new Debito(valor, new Date());
-        const saldoAposDebito = this.saldo - valor;
-
-        if(saldoAposDebito >= -this.limite) {
-            this.transacoes.push(debito);
-            this.saldo -= valor;
-        } else {
-            throw new Error('Saldo insuficiente para realizar o saque.')
-        }
+        const credito = new Credito(valor, new Date());
+        this.transacoes.push(credito);
     }
 
     sacar(valor: number): void {
-        const debito = new Debito(valor, new Date());
-        const saldoAposDebito = this.saldo - valor;
-
-        if(saldoAposDebito >= -this.limite) {
-            this.transacoes.push(debito);
-            this.saldo -= valor;
+        const saldoAposSaque = this.getSaldo() - valor;
+        if (saldoAposSaque >= -this.getLimite()) {
+          const debito = new Debito(valor, new Date());
+          this.transacoes.push(debito);
         } else {
-            throw new Error('Saldo insuficiente para realizar o saque.')
+          throw new Error('Saldo insuficiente para realizar o saque.');
         }
     }
 

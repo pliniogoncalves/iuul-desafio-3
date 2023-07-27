@@ -1,40 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Conta = void 0;
+const credito_1 = require("../credito/credito");
 const debito_1 = require("../debito/debito");
 class Conta {
-    constructor(numero, limite) {
+    constructor(numero) {
         this.saldo = 0;
         this.numero = numero;
-        this.limite = limite;
         this.transacoes = [];
     }
     getNumero() {
         return this.numero;
     }
     getSaldo() {
-        return this.saldo;
-    }
-    getLimite() {
-        return this.limite;
+        const totalCreditos = this.transacoes
+            .filter((transacao) => transacao instanceof credito_1.Credito)
+            .reduce((total, credito) => total + credito.getValor(), 0);
+        const totalDebitos = this.transacoes
+            .filter((transacao) => transacao instanceof debito_1.Debito)
+            .reduce((total, debito) => total + debito.getValor(), 0);
+        return totalCreditos - totalDebitos;
     }
     depositar(valor) {
-        const debito = new debito_1.Debito(valor, new Date());
-        const saldoAposDebito = this.saldo - valor;
-        if (saldoAposDebito >= -this.limite) {
-            this.transacoes.push(debito);
-            this.saldo -= valor;
-        }
-        else {
-            throw new Error('Saldo insuficiente para realizar o saque.');
-        }
+        const credito = new credito_1.Credito(valor, new Date());
+        this.transacoes.push(credito);
     }
     sacar(valor) {
-        const debito = new debito_1.Debito(valor, new Date());
-        const saldoAposDebito = this.saldo - valor;
-        if (saldoAposDebito >= -this.limite) {
+        const saldoAposSaque = this.getSaldo() - valor;
+        if (saldoAposSaque >= -this.getLimite()) {
+            const debito = new debito_1.Debito(valor, new Date());
             this.transacoes.push(debito);
-            this.saldo -= valor;
         }
         else {
             throw new Error('Saldo insuficiente para realizar o saque.');
