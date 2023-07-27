@@ -29,6 +29,17 @@ class Conta {
             throw new Error('Saldo insuficiente para realizar o saque.');
         }
     }
+    sacar(valor) {
+        const debito = new debito_1.Debito(valor, new Date());
+        const saldoAposDebito = this.saldo - valor;
+        if (saldoAposDebito >= -this.limite) {
+            this.transacoes.push(debito);
+            this.saldo -= valor;
+        }
+        else {
+            throw new Error('Saldo insuficiente para realizar o saque.');
+        }
+    }
     getTransacoes() {
         return this.transacoes;
     }

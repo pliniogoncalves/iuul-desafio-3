@@ -3,7 +3,7 @@ import { Debito } from "../debito/debito";
 
 export abstract class Conta{
     private numero: string;
-    private saldo: number = 0;
+    protected saldo: number = 0;
     private limite: number;
     private transacoes:(Debito | Credito)[];
 
@@ -37,7 +37,21 @@ export abstract class Conta{
         }
     }
 
+    sacar(valor: number): void {
+        const debito = new Debito(valor, new Date());
+        const saldoAposDebito = this.saldo - valor;
+
+        if(saldoAposDebito >= -this.limite) {
+            this.transacoes.push(debito);
+            this.saldo -= valor;
+        } else {
+            throw new Error('Saldo insuficiente para realizar o saque.')
+        }
+    }
+
     getTransacoes(): (Debito | Credito)[]{
         return this.transacoes;
     }
+
+    abstract calcularSaldo(): number;
 }
