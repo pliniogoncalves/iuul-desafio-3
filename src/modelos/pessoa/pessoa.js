@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pessoa = void 0;
 class Pessoa {
     constructor(nome, cpf, telefone) {
-        this._nome = nome;
-        this._cpf = cpf;
-        this._telefone = telefone;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
     }
     //Metodos Get
     getNome() {
-        return this._nome;
+        return this.nome;
     }
     getCpf() {
-        return this._cpf;
+        return this.cpf;
     }
     getTelefone() {
-        return this._telefone;
+        return this.telefone;
     }
 }
 exports.Pessoa = Pessoa;

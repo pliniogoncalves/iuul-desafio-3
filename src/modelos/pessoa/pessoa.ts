@@ -1,26 +1,26 @@
 export abstract class Pessoa{
-    protected _nome: string;
-    protected _cpf: string;
-    protected _telefone: string;
+    private nome: string;
+    private cpf: string;
+    private telefone: string;
 
     constructor(nome: string, cpf: string, telefone: string) {
-        this._nome = nome;
-        this._cpf = cpf;
-        this._telefone = telefone;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
     }
 
     //Metodos Get
 
     getNome(): string {
-        return this._nome;
+        return this.nome;
     }
 
     getCpf(): string {
-        return this._cpf;
+        return this.cpf;
     }
 
     getTelefone(): string {
-        return this._telefone;
+        return this.telefone;
     }
 }
 
