@@ -5,13 +5,13 @@ import { Pessoa } from "../pessoa/pessoa";
 
 export class Cliente extends Pessoa implements IUsuario{
     private vip: boolean;
-    private endereco: Endereco;
+    private enderecos: Endereco[];
     private contas: Conta[];
 
     constructor(cpf: string, nome: string, telefone: string, vip: boolean, endereco: Endereco) {
         super(cpf, nome, telefone)
         this.vip = vip;
-        this.endereco = endereco;
+        this.enderecos = [endereco];
         this.contas = [];
     }
 
@@ -19,9 +19,13 @@ export class Cliente extends Pessoa implements IUsuario{
         return true;
     }
 
-    listarEndereco(): string {
-        return `Endereço: ${this.endereco.getCep()}, ${this.endereco.getLogradouro()}, ${this.endereco.getNumero()}, ${this.endereco.getComplemento()}, ${this.endereco.getCidade()}, ${this.endereco.getUf()}`; 
+    listarEndereco(): string[] {
+        return this.enderecos.map((endereco) => `Endereço: ${endereco.getCep()}, ${endereco.getLogradouro()}, ${endereco.getNumero()}, ${endereco.getComplemento()}, ${endereco.getCidade()}, ${endereco.getUf()}`); 
     }
+
+    adicionarEndereco(endereco: Endereco): void {
+        this.enderecos.push(endereco);
+      }
 
     associarConta(conta: Conta): void {
         this.contas.push(conta);
