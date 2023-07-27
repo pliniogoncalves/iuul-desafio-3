@@ -6,7 +6,10 @@ const credito_1 = require("../credito/credito");
 const debito_1 = require("../debito/debito");
 class ContaPoupanca extends conta_1.Conta {
     constructor(numero) {
-        super(numero, 0);
+        super(numero);
+    }
+    getLimite() {
+        return 0;
     }
     calcularSaldo() {
         let saldoPoupanca = 0;

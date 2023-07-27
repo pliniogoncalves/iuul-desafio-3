@@ -4,8 +4,12 @@ import { Debito } from "../debito/debito";
 
 export class ContaPoupanca extends Conta {
     constructor(numero: string){
-        super(numero, 0);
+        super(numero);
     }
+
+    getLimite(): number {
+        return 0;
+      }
 
     calcularSaldo(): number {
         let saldoPoupanca = 0;
