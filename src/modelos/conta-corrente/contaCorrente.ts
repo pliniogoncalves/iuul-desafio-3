@@ -12,19 +12,23 @@ export class ContaCorrente extends Conta {
 
     getLimite(): number {
         return this.limite;
-      }
+    }
+
+    setLimite(novoLimite: number): void {
+        this.limite = novoLimite;
+    }
 
     transferir(contaDestino: Conta, valor: number): void {
-        if (valor <= this.getSaldo() + this.limite) {
-            const saldoAposTransferencia = this.getSaldo() - valor;
-                if (saldoAposTransferencia >= -this.limite) {
-                    this.sacar(valor);
-                    contaDestino.depositar(valor);
-                } else {
-                    throw new Error('Limite de crédito insuficiente para realizar a transferência.');
-                }
+        if (valor <= this.getSaldo()) {
+          const saldoAposTransferencia = this.getSaldo() - valor;
+          if (saldoAposTransferencia >= -this.getLimite()) {
+            this.sacar(valor);
+            contaDestino.depositar(valor);
+          } else {
+            throw new Error('Limite de crédito insuficiente para realizar a transferência.');
+          }
         } else {
-            throw new Error('Saldo insuficiente para realizar a transferência.');
+          throw new Error('Saldo insuficiente para realizar a transferência.');
         }
     }
 

@@ -12,10 +12,13 @@ class ContaCorrente extends conta_1.Conta {
     getLimite() {
         return this.limite;
     }
+    setLimite(novoLimite) {
+        this.limite = novoLimite;
+    }
     transferir(contaDestino, valor) {
-        if (valor <= this.getSaldo() + this.limite) {
+        if (valor <= this.getSaldo()) {
             const saldoAposTransferencia = this.getSaldo() - valor;
-            if (saldoAposTransferencia >= -this.limite) {
+            if (saldoAposTransferencia >= -this.getLimite()) {
                 this.sacar(valor);
                 contaDestino.depositar(valor);
             }
