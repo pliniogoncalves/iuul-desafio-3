@@ -7,7 +7,6 @@ class Pessoa {
         this.cpf = cpf;
         this.telefone = telefone;
     }
-    //Metodos Get
     getNome() {
         return this.nome;
     }

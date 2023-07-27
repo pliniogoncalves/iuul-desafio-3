@@ -9,8 +9,6 @@ export abstract class Pessoa{
         this.telefone = telefone;
     }
 
-    //Metodos Get
-
     getNome(): string {
         return this.nome;
     }
