@@ -1,3 +1,5 @@
+import { Cliente } from "../cliente/cliente";
+
 export class Endereco {
     private cep: string;
     private logradouro: string;
@@ -5,6 +7,7 @@ export class Endereco {
     private complemento: string;
     private cidade: string;
     private uf:string;
+    private clientes: Cliente[];
 
     constructor(cep: string, logradouro: string, numero: string, complemento: string, cidade:string, uf: string) {
         this.cep = cep;
@@ -13,6 +16,7 @@ export class Endereco {
         this.complemento = complemento;
         this.cidade = cidade;
         this.uf = uf;
+        this.clientes = [];
     }
 
     getCep(): string {
@@ -37,6 +41,21 @@ export class Endereco {
 
     getUf(): string {
         return this.uf;
+    }
+
+    associarCliente(cliente: Cliente): void {
+        this.clientes.push(cliente);
+    }
+
+    desassociarCliente(cliente: Cliente): void {
+        const index = this.clientes.indexOf(cliente);
+        if(index !== -1) {
+            this.clientes.splice(index, 1);
+        }
+    }
+
+    getClientes(): Cliente[] {
+        return this.clientes;
     }
     
 }

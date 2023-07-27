@@ -4,16 +4,16 @@ import { Pessoa } from "../pessoa/pessoa";
 
 export class Funcionario extends Pessoa implements IUsuario {
     private salario: number;
-    private cargo: Cargo;
+    private cargo: Cargo | null;
 
     constructor(nome: string, cpf: string, telefone:string, cargo: Cargo, salario: number) {
         super(nome, cpf, telefone);
-        this.cargo = cargo;
+        this.cargo = null;
         this.salario = salario;
     }
 
     autenticar(): boolean {
-        return true;
+        return false;
     }
 
     getSalario(): number {
@@ -24,7 +24,15 @@ export class Funcionario extends Pessoa implements IUsuario {
         this.salario = salario;
     }
 
-   getCargo(): Cargo {
+    associarCargo(cargo: Cargo): void {
+        this.cargo = cargo;
+    }
+    
+    desassociarCargo(): void {
+        this.cargo = null;
+    }
+
+   getCargo(): Cargo | null {
     return this.cargo;
    }
 }

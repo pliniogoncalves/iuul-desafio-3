@@ -9,6 +9,7 @@ class Endereco {
         this.complemento = complemento;
         this.cidade = cidade;
         this.uf = uf;
+        this.clientes = [];
     }
     getCep() {
         return this.cep;
@@ -27,6 +28,18 @@ class Endereco {
     }
     getUf() {
         return this.uf;
+    }
+    associarCliente(cliente) {
+        this.clientes.push(cliente);
+    }
+    desassociarCliente(cliente) {
+        const index = this.clientes.indexOf(cliente);
+        if (index !== -1) {
+            this.clientes.splice(index, 1);
+        }
+    }
+    getClientes() {
+        return this.clientes;
     }
 }
 exports.Endereco = Endereco;
