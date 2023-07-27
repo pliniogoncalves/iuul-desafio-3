@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cliente = void 0;
-class Cliente {
-    constructor(vip, endereco) {
+const pessoa_1 = require("../pessoa/pessoa");
+class Cliente extends pessoa_1.Pessoa {
+    constructor(cpf, nome, telefone, vip, endereco) {
+        super(cpf, nome, telefone);
         this.vip = vip;
         this.endereco = endereco;
     }

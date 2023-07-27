@@ -1,11 +1,13 @@
 import { IUsuario } from "../../interfaces/usuario/IUsuario";
 import { Endereco } from "../endereco/endereco";
+import { Pessoa } from "../pessoa/pessoa";
 
-export class Cliente implements IUsuario{
+export class Cliente extends Pessoa implements IUsuario{
     private vip: boolean;
     private endereco: Endereco;
 
-    constructor(vip: boolean, endereco: Endereco) {
+    constructor(cpf: string, nome: string, telefone: string, vip: boolean, endereco: Endereco) {
+        super(cpf, nome, telefone)
         this.vip = vip;
         this.endereco = endereco;
     }
